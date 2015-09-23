@@ -1,5 +1,3 @@
-# programmingisnotfornoobs
-@squest
 -- First Assignment
 -- Reimplement Haskell function
 -- DON'T USE GOOGLE
@@ -10,20 +8,20 @@ import Data.List
 -- 1.a
 
 null' x
-  | x == [] = true
-  | otherwise = false
+  | x == [] = True
+  | otherwise = False
 
 --pembatas
 
 take' 0 x = []
-take' x [] =[]
-take' y (x:xs) = x : take' (y-1) (xs)
+take' x [] = []
+take' n (x:xs) = x : take' (n-1) (xs)
 
 --pembatas
 
 drop' 0 x = x
 drop' x [] = []
-drop' y (x:xs) = drop' (y-1) (xs)
+drop' n (x:xs) = drop' (n-1) (xs)
 
 --pembatas
 
@@ -36,15 +34,22 @@ snd' (x,y) = y
 --pembatas
 
 map' f [] = []
-map' f (x:xs) = f x : map' f xs
+map' f (x:xs) = (f x) : map' f (xs)
 
 --pembatas
 
-filter' x = x
+filter' _ [] = []
+filter' a (x:xs)
+  | a x == True = x : filter' a (xs)
+  | a x == False = filter' a (xs)
 
 --pembatas
 
-delete' x = x
+delete' _ [] = []
+delete' 0 (x:xs) = (x:xs)
+delete' y (x:xs)
+  | y == x = xs
+  | otherwise = x : delete' y xs
 
 --pembatas
 
@@ -60,11 +65,15 @@ foldl1' x = x
 
 --pembatas
 
-zip' x = x
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs) (y:ys) = (x,y) : zip' xs ys
 
 --pembatas
 
-zipWith' x = x
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
 
 --pembatas
 
@@ -80,11 +89,19 @@ scanl1' x = x
 
 --pembatas
 
-elem' x = x
+elem' _ [] = False
+elem' a (x : xs)
+  | a == x = True
+  | a /= x = elem' a (xs)
+  | otherwise = True
 
 --pembatas
 
-notElem' x = x
+notElem' _ [] = True
+notElem' a (x : xs)
+  | a == x = False
+  | a /= x = notElem' a (xs)
+  | otherwise = False
 
 --pembatas
 
@@ -97,7 +114,8 @@ length' (x:xs) = 1 + (length' xs)
 
 --pembatas
 
-reverse' x = x
+reverse' [] = []
+reverse' (x:xs) = (reverse' xs) ++ [x]
 
 --pembatas
 
@@ -127,27 +145,40 @@ min' x y
 
 --pembatas
 
-concat'
+concat' [] = []
+concat' [[]] = []
+concat (x:xs) = x ++ concat' xs
 
 --pembatas
 
-intersperse' x = x
+intersperse' a [] = []
+intersperse' a [x] = [x]
+intersperse' a (x:xs) = x : a : intersperse' a (xs)
 
 --pembatas
 
-intercalate' x = x
+intercalate' (x:xs) (y:ys) = (y:ys)
 
 --pembatas
 
-and' x = x
+and' [] = True
+and' (x:xs)
+  | x == False = False
+  | otherwise = and' xs
 
 --pembatas
 
-or' x = x
+or' [] = False
+or' (x:xs)
+  | x == True = True
+  | otherwise = or' xs
 
 --pembatas
 
-zip3' x = x
+zip3' [] _ _ = []
+zip3' _ [] _ = []
+zip3' _ _ [] = []
+zip3' (x:xs) (y:ys) (z:zs) = (x,y,z) : zip3' xs ys zs
 
 --pembatas
 
@@ -177,11 +208,19 @@ unwords' x = x
 
 --pembatas
 
-takeWhile' x = x
+takeWhile' _ [] = []
+takeWhile' a (x:xs)
+  | a x == False = []
+  | a x == True = x : takeWhile' a xs
+  | otherwise = takeWhile' a xs
 
 --pembatas
 
-dropWhile' x = x
+dropWhile' _ [] = []
+dropWhile' a (x:xs)
+  | a x == False = (x:xs)
+  | a x == True = dropWhile' a (xs)
+  | otherwise = dropWhile' a (xs)
 
 --pembatas
 
@@ -251,7 +290,8 @@ partition' x = x
 
 --pembatas
 
-replicate' x = x
+replicate' 0 _ = []
+replicate' x y = y : replicate' (x-1) y
 
 --pembatas
 -- First Assignment
